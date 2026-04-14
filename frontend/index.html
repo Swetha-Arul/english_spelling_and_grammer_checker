@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compiler Spell Studio</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <h1>Compiler-Based English Spell Correction</h1>
+          <p class="hero-text">
+            This system combines lexical analysis, dictionary validation, and rule-based grammar checking to
+            transform raw English text into a clear correction report.
+          </p>
+        </div>
+        <div class="hero-card">
+          <div class="metric-strip">
+            <div>
+              <span class="metric-value" id="metricWords">0</span>
+              <span class="metric-label">Words processed</span>
+            </div>
+            <div>
+              <span class="metric-value" id="metricMisspellings">0</span>
+              <span class="metric-label">Misspellings found</span>
+            </div>
+          </div>
+          <div class="pipeline-mini">
+            <span>Lexer</span>
+            <span>Validator</span>
+            <span>Rule Parser</span>
+          </div>
+        </div>
+      </header>
+
+      <main class="layout-grid">
+        <section class="panel panel-input">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Input</p>
+              <h2>Text workspace</h2>
+            </div>
+            <span class="status-pill" id="systemStatus">Ready</span>
+          </div>
+
+          <form id="analysisForm" class="analysis-form">
+            <label class="field-label" for="textInput">Enter or upload English text</label>
+            <textarea
+              id="textInput"
+              name="text"
+              rows="12"
+              placeholder="Paste a paragraph here, or upload a .txt or .md file to analyze the spelling and grammar."
+            ></textarea>
+
+            <div class="form-row">
+              <label class="upload-field" for="fileInput">
+                <input id="fileInput" type="file" accept=".txt,.md,.csv,text/plain" />
+                <span class="upload-title">Upload text file</span>
+                <span class="upload-caption" id="fileLabel">No file selected</span>
+              </label>
+
+              <div class="action-group">
+                <button type="submit" class="button button-primary" id="analyzeButton">
+                  <span class="button-text">Analyze text</span>
+                  <span class="button-loader" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel panel-results">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Output</p>
+              <h2>Analysis report</h2>
+            </div>
+          </div>
+
+          <div id="emptyState" class="empty-state">
+            <h3>Awaiting input</h3>
+            <p>Run an analysis to inspect the token stream, spelling issues, grammar suggestions, and corrected output.</p>
+          </div>
+
+          <div id="loadingState" class="results-skeleton hidden" aria-hidden="true">
+            <div class="skeleton skeleton-wide"></div>
+            <div class="skeleton-row">
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+              <div class="skeleton"></div>
+            </div>
+            <div class="skeleton skeleton-tall"></div>
+            <div class="skeleton skeleton-tall"></div>
+          </div>
+
+          <div id="results" class="results hidden">
+            <section class="summary-grid" id="summaryGrid"></section>
+
+            <section class="result-block">
+              <div class="block-head">
+                <h3>Corrected text</h3>
+              </div>
+              <div class="text-output" id="correctedText"></div>
+            </section>
+
+            <section class="result-block">
+              <div class="block-head">
+                <h3>Compiler pipeline</h3>
+              </div>
+              <div id="pipelineGrid" class="pipeline-grid"></div>
+            </section>
+
+            <section class="result-block">
+              <div class="block-head">
+                <h3>Spelling issues</h3>
+              </div>
+              <div id="spellingList" class="issue-list"></div>
+            </section>
+
+            <section class="result-block">
+              <div class="block-head">
+                <h3>Grammar issues</h3>
+              </div>
+              <div id="grammarList" class="issue-list"></div>
+            </section>
+
+            <section class="result-block">
+              <div class="block-head">
+                <h3>Token preview</h3>
+              </div>
+              <div id="tokenList" class="token-list"></div>
+            </section>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
